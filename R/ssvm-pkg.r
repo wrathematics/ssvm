@@ -1,9 +1,8 @@
 #' ssvm: Simple SVM
 #' 
 #' @description
-#' A simple linear SVM implementation.
-#' 
-#' @useDynLib ssvm
+#' A simple two-class linear SVM implementation using
+#' the Pegasos algorithm.
 #' 
 #' @docType package
 #' @name ssvm-package

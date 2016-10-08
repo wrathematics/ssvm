@@ -5,7 +5,8 @@
 \alias{ssvm-package}
 \title{ssvm: Simple SVM}
 \description{
-A simple linear SVM implementation.
+A simple two-class linear SVM implementation using
+the Pegasos algorithm.
 }
 \author{
 Drew Schmidt
