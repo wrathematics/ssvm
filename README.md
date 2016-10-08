@@ -8,7 +8,7 @@
 
 **ssvm** is the Simple SVM package.  It has a 2-class linear SVM implementation using the Pegasos algorithm, written on my day off for fun.  The design philosophy for the project is:
 
-1. Use a clean C interface to handle the heavy lifting.  Bloated idiomatic C++ interfaces look stupid and often wreck performance.
+1. Use a clean C backend to handle the heavy lifting.
 2. The implementation is reasonably efficient.  One could work a bit harder to make this faster, but I think all of the "easy" gains have already been achieved.
 3. The R interface doesn't use formulas.  Oh my god do not get me started on fucking formulas.  If I could ban one thing from R, it would be formulas and I wouldn't even have to stop and think about it.
 4. The secret ingredient is love.
