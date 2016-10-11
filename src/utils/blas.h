@@ -30,18 +30,28 @@
 
 #include "types.h"
 
+#define ROW_MAJOR 0
+#define COL_MAJOR 1
 
 void dlassq_(const int *n, const double *x, const int *incx, const double *scale, double *sumsq);
 
-static inline double vecvecprod(cbool intercept, cint n, cint p, cdbl_r x, cdbl_r w)
+static inline double vecvecprod(cint storage, cbool intercept, cint n, cint p, cdbl_r x, cdbl_r w)
 {
   double tmp = 0.0;
   
   if (intercept)
     tmp += w[0];
   
-  for (uint32_t i=0; i<p-intercept; i++)
-    tmp += w[i+intercept] * x[n*i];
+  if (storage == COL_MAJOR)
+  {
+    for (uint32_t i=0; i<p-intercept; i++)
+      tmp += w[i+intercept] * x[n*i];
+  }
+  else
+  {
+    for (uint32_t i=0; i<p-intercept; i++)
+      tmp += w[i+intercept] * x[i];
+  }
   
   return tmp;
 }

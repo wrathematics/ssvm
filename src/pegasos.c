@@ -82,7 +82,10 @@ void svm_pegasos_fit(const svmdata_t *const restrict data, const svmparam_t *con
     const double invt = 1.0 / ((double) t);
     const uint32_t index = draw(n);
     
-    const double tmp = y[index] * vecvecprod(intercept, n, w_len, x+index, w);
+    // NOTE to self: if x is transposed...
+    // const double tmp = y[index] * vecvecprod(ROW_MAJOR, intercept, n, w_len, x+(index*p), w);
+    const double tmp = y[index] * vecvecprod(COL_MAJOR, intercept, n, w_len, x+index, w);
+    
     if (tmp < 1)
     {
       double eta_t = invlambda * invt;
@@ -92,6 +95,8 @@ void svm_pegasos_fit(const svmdata_t *const restrict data, const svmparam_t *con
         w[0] = (1.0 - invt)*w[0] + eta_t*y[index];
       for (int i=0; i<p; i++)
         w[i+intercept] = (1.0 - invt)*w[i+intercept] + eta_t*y[index]*x[index + n*i];
+        // NOTE to self: if x is transposed...
+        // w[i+intercept] = (1.0 - invt)*w[i+intercept] + eta_t*y[index]*x[index*p + i];
     }
     else
     {
@@ -132,7 +137,7 @@ void svm_pegasos_pred(cbool intercept, const svmdata_t *const restrict newdata)
   #pragma omp parallel for default(none) if(n>OMP_MIN_SIZE)
   for (int i=0; i<n; i++)
   {
-    double tmp = vecvecprod(intercept, n, p, x_new+i, w);
+    double tmp = vecvecprod(COL_MAJOR, intercept, n, p, x_new+i, w);
     pred[i] = SIGN(tmp);
   }
 }
