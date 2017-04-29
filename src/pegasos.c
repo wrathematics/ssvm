@@ -38,7 +38,6 @@
 
 // TODO coinflip of x==0 ?
 #define SIGN(x) ((x) > 0 ? 1 : -1)
-#define MIN(a,b) ((a) < (b) ? (a) : (b))
 
 
 static inline uint32_t draw(uint32_t n)
@@ -107,7 +106,6 @@ void svm_pegasos_fit(const svmdata_t *const restrict data, const svmparam_t *con
     }
     
     double coef = rtinvlambda / vecnorm(w_len, w);
-    coef = MIN(coef, 1.0);
     if (coef < 1)
     {
       SAFE_FOR_SIMD
