@@ -44,12 +44,12 @@ static inline double vecvecprod(cint storage, cbool intercept, cint n, cint p, c
   
   if (storage == COL_MAJOR)
   {
-    for (uint32_t i=0; i<p-intercept; i++)
+    for (len_t i=0; i<p-intercept; i++)
       tmp += w[i+intercept] * x[n*i];
   }
   else
   {
-    for (uint32_t i=0; i<p-intercept; i++)
+    for (len_t i=0; i<p-intercept; i++)
       tmp += w[i+intercept] * x[i];
   }
   

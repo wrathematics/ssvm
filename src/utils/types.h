@@ -46,19 +46,23 @@ typedef double *const restrict dbl_r;
 typedef const double *const restrict cdbl_r;
 
 
+
+typedef uint32_t len_t;
+typedef uint64_t iter_t;
+
 typedef struct svmparam_t
 {
   bool init_w;          // should w be initialized to 0, or is this an update?
   bool intercept;       // include an intercept in the model?
-  uint32_t k;           // currently ignored
+  len_t k;              // currently ignored
   double lambda;        // regularization parameter
-  uint64_t niter;       // number of iterations
+  iter_t niter;         // number of iterations
 } svmparam_t;
 
 typedef struct svmdata_t
 {
-  uint32_t nr;          // number of rows
-  uint32_t nc;          // number of cols
+  len_t nr;             // number of rows
+  len_t nc;             // number of cols
   double *restrict x;   // predictors
   int *restrict y;      // response
   double *restrict w;   // weights

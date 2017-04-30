@@ -40,10 +40,10 @@
 #define SIGN(x) ((x) > 0 ? 1 : -1)
 
 
-static inline uint32_t draw(uint32_t n)
+static inline len_t draw(len_t n)
 {
   // draw digit 0 to (n-1)
-  return (uint32_t) ((int) n*RUNIF);
+  return (len_t) ((int) n*RUNIF);
 }
 
 
@@ -76,10 +76,10 @@ void svm_pegasos_fit(const svmdata_t *const restrict data, const svmparam_t *con
   
   STARTRNG;
   
-  for (uint32_t t=1; t<=params->niter; t++)
+  for (iter_t t=1; t<=params->niter; t++)
   {
     const double invt = 1.0 / ((double) t);
-    const uint32_t index = draw(n);
+    const len_t index = draw(n);
     
     // NOTE to self: if x is transposed...
     // const double tmp = y[index] * vecvecprod(ROW_MAJOR, intercept, n, w_len, x+(index*p), w);
