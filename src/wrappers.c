@@ -78,7 +78,7 @@ SEXP R_svm_pegasos_pred(SEXP x_new, SEXP w, SEXP intercept)
   svmdata_t newdata;
   svm_pegasos_setdata(&newdata, .nr=nr, .nc=nc, .x=REAL(x_new), .y=INTEGER(pred), .w=REAL(w));
   
-  svm_pegasos_pred(INT(intercept), &newdata);
+  svm_pegasos_predict(INT(intercept), &newdata);
   
   UNPROTECT(1);
   return pred;
