@@ -52,7 +52,15 @@ SEXP R_svm_pegasos_fit(SEXP intercept, SEXP k, SEXP lambda, SEXP niter, SEXP x, 
   PROTECT(w = allocVector(REALSXP, nc+INT(intercept)));
   data.w = REAL(w);
   
+  
+  // R_PreserveObject(x);
+  // xpose_inplace(nr, nc, REAL(x));
+  
   svm_pegasos_fit(&data, &p);
+  
+  // xpose_inplace(nc, nr, REAL(x));
+  // R_ReleaseObject(x);
+  
   
   UNPROTECT(1);
   return w;
