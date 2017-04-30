@@ -34,17 +34,7 @@
 #include "utils/blas.h"
 #include "utils/defs.h"
 #include "utils/safeomp.h"
-
-
-// TODO coinflip of x==0 ?
-#define SIGN(x) ((x) > 0 ? 1 : -1)
-
-
-static inline len_t draw(len_t n)
-{
-  // draw digit 0 to (n-1)
-  return (len_t) ((int) n*RUNIF);
-}
+#include "utils/samplers.h"
 
 
 /**
@@ -79,7 +69,7 @@ void svm_pegasos_fit(const svmdata_t *const restrict data, const svmparam_t *con
   for (iter_t t=1; t<=params->niter; t++)
   {
     const double invt = 1.0 / ((double) t);
-    const len_t index = draw(n);
+    const len_t index = sample_unif(0, n);
     
     // NOTE to self: if x is transposed...
     // const double tmp = y[index] * vecvecprod(ROW_MAJOR, intercept, n, w_len, x+(index*p), w);
@@ -116,26 +106,4 @@ void svm_pegasos_fit(const svmdata_t *const restrict data, const svmparam_t *con
   
   
   ENDRNG;
-}
-
-
-
-/* 
- * @param 
- * @param pred (output); n-length vector
- */
-void svm_pegasos_pred(cbool intercept, const svmdata_t *const restrict newdata)
-{
-  const int n = newdata->nr;
-  const int p = newdata->nc;
-  const double *const x_new = newdata->x;
-  int *const pred = newdata->y;
-  const double *const w = newdata->w;
-  
-  #pragma omp parallel for default(none) if(n>OMP_MIN_SIZE)
-  for (int i=0; i<n; i++)
-  {
-    double tmp = vecvecprod(COL_MAJOR, intercept, n, p, x_new+i, w);
-    pred[i] = SIGN(tmp);
-  }
 }
