@@ -31,6 +31,10 @@
 
 #include "utils/types.h"
 
+#define SSVM_OK         0
+#define SSVM_BADMALLOC -1
+
+
 
 static inline int svm_pegasos_setparams_(svmparam_t *p, svmparam_t args)
 {
@@ -81,7 +85,7 @@ static inline int svm_pegasos_setdata_(svmdata_t *d, svmdata_t args)
 
 // void svm_pegasos_fit(cint nrows, cint ncols, cdbl_r x, cdbl_r y, const svmparam_t *const restrict params, dbl_r w);
 void svm_pegasos_fit(const svmdata_t *const restrict data, const svmparam_t *const restrict params);
-void svm_pegasos_pred(cbool intercept, const svmdata_t *const restrict newdata);
+void svm_pegasos_predict(cbool intercept, const svmdata_t *const restrict newdata);
 
 
 #endif
