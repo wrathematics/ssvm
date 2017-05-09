@@ -44,7 +44,7 @@
  * @param params (input) pegasos params
  * @param w (output) p-length vector if intercept=false; p+1 otherwise
  */
-void svm_pegasos_fit(const svmdata_t *const restrict data, const svmparam_t *const restrict params)
+int svm_pegasos_fit(const svmdata_t *const restrict data, const svmparam_t *const restrict params)
 {
   const int n = data->nr;
   const int p = data->nc;
@@ -106,4 +106,6 @@ void svm_pegasos_fit(const svmdata_t *const restrict data, const svmparam_t *con
   
   
   ENDRNG;
+  
+  return SSVM_OK;
 }
