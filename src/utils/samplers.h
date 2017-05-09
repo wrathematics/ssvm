@@ -28,7 +28,8 @@
 #ifndef SSVM_SAMPLERS_H
 #define SSVM_SAMPLERS_H
 
-
+#include "defs.h"
+#include "quicksort.h"
 #include "safeomp.h"
 
 
@@ -52,28 +53,20 @@ static inline int sample_unif(const int low, const int high)
  * @param samplen (input) number of values of [0, maxval) sampled
  * @param samp (output) sampled values
  */
-static int sample_res(const len_t maxval, const len_t samplen, len_t **samp)
+static inline void sample_res(const len_t maxval, const len_t samplen, len_t *const restrict samp)
 {
-  *samp = malloc(samplen * sizeof(**samp));
-  if (samp == NULL)
-    return SSVM_BADMALLOC;
-  
   SAFE_FOR_SIMD
   for (int i=0; i<samplen; i++)
-    (*samp)[i] = i+1;
-  
-  STARTRNG;
+    samp[i] = i+1;
   
   for (int i=samplen; i<maxval; i++)
   {
     int flip = sample_unif(0, i);
     if (flip < samplen)
-      (*samp)[flip] = i+1;
+      samp[flip] = i+1;
   }
   
-  ENDRNG;
-  
-  return SSVM_OK;
+  sorted_qs(samplen, samp);
 }
 
 
