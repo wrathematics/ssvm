@@ -18,13 +18,3 @@ structure(c(-0.0798928770978866, -0.124892553609644, -0.457169655873265,
 "Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"))
 test <- pegasos(x, y, intercept=TRUE)$w
 stopifnot(all.equal(test, truth))
-
-
-
-#library(rbenchmark)
-#m = 2000
-#n = 650
-#x = matrix(rnorm(m*n), m, n)
-#y = sample(c(-1, 1), m, replace=TRUE)
-#system.time(pegasos(x, y, intercept=T))
-## benchmark(pegasos(x, y, intercept=FALSE), replications=25)
